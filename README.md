@@ -4,6 +4,7 @@
 	> PHP/XAMPP (https://www.apachefriends.org/index.html)
 	> Composer (https://getcomposer.org/download/)
 	> NPM (https://nodejs.org/en/download/)
+	> Postman
 
 # 🏗️ Deployment Instructions
 ## Cloning Repo
@@ -16,7 +17,10 @@
 	> Run php artisan key:generate 
 
 ## Setting Up Database
-	> Run XAMPP, Start Apache and MySQL, Go to localhost/phpmyadmin on your browser, and Create a database named ojt-api
+	> Run XAMPP
+	> Start Apache and MySQL,
+	> Go to localhost/phpmyadmin on your browser
+	> Create a database named ojt-api
 	> Go to CMD and run php artisan migrate:fresh
 
 ## Starting System and testing API
