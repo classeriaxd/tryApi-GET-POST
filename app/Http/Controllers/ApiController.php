@@ -52,8 +52,7 @@ class ApiController extends Controller
             return response()->make(
                 'Email or Password is incorrect',
                 403,
-            );
-        
+            );   
     }
 
     public function getProfilePictureMetadata($userID)
@@ -98,5 +97,65 @@ class ApiController extends Controller
             ];
 
         return response()->json($data, $data['status']);
+    }
+
+    public function updateUserDetails(Request $request, $userID)
+    {
+        $user = User::where('user_id', $userID)->first();
+        $data = array();
+        $userData = $request->validate([
+            'name' => 'required|string|min:2',
+            'email' => 'required|email|unique:App\Models\User,email,' . $user->user_id,
+        ]);
+        // Check if user exists
+        if ($user === NULL) 
+        {
+            $data = [
+                'status' => 404,
+                'contents' => [
+                    'message' => 'User not found.', 
+                ]
+            ];
+            return response()->json($data, $data['status']);
+        }
+
+        // ->cant check with postman, postman cant keep session
+        // // Check if user logged in matches the user ID in parameter
+        // else if ($user->user_id !== Auth::user()->user_id)
+        // {
+        //     $data = [
+        //         'status' => 403,
+        //         'contents' => [
+        //             'message' => 'Forbidden.', 
+        //         ]
+        //     ];
+        //     return response()->json($data, $data['status']);
+        // }
+
+        try 
+        {
+            User::where('user_id', $userID)->update([
+                'name' => $userData['name'],
+                'email' => $userData['email'],
+            ]);
+            $data = [
+                'status' => 200,
+                'contents' => [
+                    'message' => 'OK', 
+                ]
+            ];
+            return response()->json($data, $data['status']);
+        } 
+        catch(\Illuminate\Database\QueryException $e)
+        {
+            $data = [
+                'status' => 500,
+                'contents' => [
+                    'message' => 'User data failed to update.', 
+                ]
+            ];
+            return response()->json($data, $data['status']);
+        }
+        
     }
 }
