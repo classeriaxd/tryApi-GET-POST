@@ -15,6 +15,7 @@
 	> Run ren .env.example .env
 		> Open .env file then edit DB_DATABASE field to DB_DATABASE=ojt-api
 	> Run php artisan key:generate 
+	> Run php artisan storage:link 
 
 ## Setting Up Database
 	> Run XAMPP

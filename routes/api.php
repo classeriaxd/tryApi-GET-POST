@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+Route::get('/userDetails/{userID}/getProfilePictureMetadata', [App\Http\Controllers\ApiController::class, 'getProfilePictureMetadata']);
 Route::get('/userDetails/{userID}', [App\Http\Controllers\ApiController::class, 'getUserDetails']);
+Route::put('/userDetails/{userID}/updateUserDetails', [App\Http\Controllers\ApiController::class, 'updateUserDetails']);
 
 Route::post('/login', [App\Http\Controllers\ApiController::class, 'loginThroughApi']);
+
+

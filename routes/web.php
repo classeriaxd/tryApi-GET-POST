@@ -20,3 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/profile-picture', [App\Http\Controllers\HomeController::class, 'updateProfilePicture'])->name('updateProfilePicture');
+Route::post('/profile-picture/store', [App\Http\Controllers\HomeController::class, 'storeProfilePicture'])->name('storeProfilePicture');

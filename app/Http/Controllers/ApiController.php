@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 use App\Models\User;
+
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ApiController extends Controller
 {
@@ -52,5 +54,49 @@ class ApiController extends Controller
                 403,
             );
         
+    }
+
+    public function getProfilePictureMetadata($userID)
+    {  
+        $data = array();
+        $user = User::where('user_id', $userID)->first();
+        if ($user === NULL)
+        {
+            $data = [
+                'status' => 404,
+                'contents' => [
+                    'message' => 'User not found.', 
+                ]
+            ];
+            return response()->json($data, $data['status']);
+        }
+            
+        // Get user's profile picture path and append public directory
+        $userProfilePicture = 'public' . $user->profile_picture;
+        
+        if (Storage::exists($userProfilePicture)) 
+        {
+            $data = [
+                'status' => 200,
+                'contents' => [
+                    'message' => 'OK', 
+                    'fileName'=> basename($userProfilePicture),
+                    'url' => Storage::path($userProfilePicture),
+                    'size' => Storage::size($userProfilePicture),
+                    'lastModified' => Storage::lastModified($userProfilePicture),
+                    'width' => getimagesize(Storage::path($userProfilePicture))[0],
+                    'height' => getimagesize(Storage::path($userProfilePicture))[1],
+                ]
+            ];
+        }
+        else
+            $data = [
+                'status' => 404,
+                'contents' => [
+                    'message' => 'Resource not found.', 
+                ]
+            ];
+
+        return response()->json($data, $data['status']);
     }
 }
