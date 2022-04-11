@@ -29,14 +29,37 @@
 	> Go to the link provided after the serve command
 	> Create a User by clicking Register
 	> In Postman, Create new HTTP Requests:
-		> To test GET:
-			> Method: GET
-			> Endpoint: http://127.0.0.1:8000/api/userDetails/1
-		> To test POST
-			> Method: POST
-			> Endpoint: http://127.0.0.1:8000/api/login
-			> Headers
-				> Key: Accept | Value: application/json
-			> Body - form-data: 
-				> Key: email | Value: {your created account's email}
-				> Key: password | Value: {your created account's password}
+
+### GET API Routes:
+	Get User Details
+	> Endpoint: http://127.0.0.1:8000/api/userDetails/1
+
+	Get Profile Picture Metadata of User 1
+	> Endpoint: http://127.0.0.1:8000/api/userDetails/1/getProfilePictureMetadata
+
+### POST API Routes
+	Register User
+	> Endpoint: http://127.0.0.1:8000/api/register
+	> Body - form-data: 
+		> Key: name | Value: {new account name}
+		> Key: email | Value: {new account email}
+		> Key: password | Value: {new account password}
+		> Key: password_confirmation | Value: {confirm new account password}
+
+	Check if credentials are correct in DB
+	> Endpoint: http://127.0.0.1:8000/api/login
+	> Headers
+		> Key: Accept | Value: application/json
+	> Body - form-data: 
+		> Key: email | Value: {your created account's email}
+		> Key: password | Value: {your created account's password}
+
+### PUT API Routes
+	Update User Details
+	> Endpoint: http://127.0.0.1:8000/api/userDetails/1/updateUserDetails
+	> Headers
+		> Key: Accept | Value: application/json
+	> Body - x-www-form-urlencoded: 
+		> Key: name | Value: {update account name}
+		> Key: email | Value: {update account email}
+		> Key: password | Value: {update account password}
